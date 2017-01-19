@@ -4,7 +4,6 @@ from django.utils import timezone
 
 class Ingredient(models.Model):
     title = models.CharField(max_length=200)
-    unit = models.
     UNIT_CHOICES = (
         ('g', 'Грамм'),
         ('l', 'Литр'),
@@ -14,6 +13,7 @@ class Ingredient(models.Model):
     unit = models.CharField(
         max_length=1,
         choices=UNIT_CHOICES,
+        default='g',
     )
 
     def __str__(self):

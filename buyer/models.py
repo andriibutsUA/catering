@@ -10,6 +10,7 @@ class Ingredient(models.Model):
         ('l', 'Литр'),
         ('q', 'Штуки'),
     )
+    supplier = models.CharField(max_length=200)
 
     def __str__(self):
         return self.title

@@ -1,6 +1,5 @@
 from django.db import models
 from django.utils import timezone
-from django.utils.encoding import smart_unicode
 
 
 class Ingredient(models.Model):

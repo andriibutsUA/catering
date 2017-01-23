@@ -1,5 +1,6 @@
 from django.db import models
 from decimal import Decimal
+from django.contrib.postgres.fields import JSONField
 
 
 class Ingredient(models.Model):
@@ -57,13 +58,8 @@ class Dish(models.Model):
     title = models.CharField(max_length=250, verbose_name="Название")
     gross = models.PositiveIntegerField(verbose_name="Брутто", default=50)
     description = models.TextField(verbose_name="Рецепт и описание")
-    dish_ingredient = models.ForeignKey('self',
-                                        on_delete=models.CASCADE,
-                                        blank=True,
-                                        null=True,
-                                        verbose_name="Блюдо в качестве ингредиента"
-                                        )
-    ingredients = models.ManyToManyField(Ingredient, verbose_name="Ингредиенты")
+    ingredients = models.ManyToManyField(Ingredient, through="Recipe", verbose_name="Ингредиенты")
+    privet = models.CharField(max_length=250, verbose_name="Приветики", default="Здоров пацаны")
     CATEGORY_CHOICES = (
         ('1', 'Холодные закуски'),
         ('2', 'Закуски'),
@@ -83,3 +79,34 @@ class Dish(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Recipe(models.Model):
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    dish = models.ForeignKey(Dish, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(blank=True, null=True, verbose_name="Количество")
+
+
+class TestIngredient(models.Model):
+    title = models.CharField(max_length=200, verbose_name="Название")
+
+    def __str__(self):
+        return self.title
+
+class TestDish(models.Model):
+    title = models.CharField(max_length=200, verbose_name="Название")
+    ingredeints = models.ManyToManyField(TestIngredient, through='TestRecipe', verbose_name="Ингредиенты")
+
+    def __str__(self):
+        return self.title
+
+class TestRecipe(models.Model):
+    ingredient = models.ForeignKey(TestIngredient, on_delete=models.CASCADE)
+    dish = models.ForeignKey(TestDish, on_delete=models.CASCADE)
+    whatever = models.DateField()
+    invite_reason = models.CharField(max_length=64)
+    quantity = models.PositiveIntegerField(blank=True, null=True)
+
+
+    def __str__(self):
+        return "Ингредиент"

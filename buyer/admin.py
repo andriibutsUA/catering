@@ -8,6 +8,11 @@ class DishInline(admin.TabularInline):
     extra = 1
     verbose_name = "Ингредиент"
     verbose_name_plural = "Ингредиенты"
+    class Media:
+        css = {
+            "all": ("http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/ui-lightness/jquery-ui.css",)
+        }
+        js = ("https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js","https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js", "js/main.js")
 
 class DishAdmin(admin.ModelAdmin):
     inlines = (DishInline,)

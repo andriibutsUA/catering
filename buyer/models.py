@@ -56,7 +56,6 @@ class Ingredient(models.Model):
 
 class Dish(models.Model):
     title = models.CharField(max_length=250, verbose_name="Название")
-    gross = models.PositiveIntegerField(verbose_name="Брутто", default=50)
     description = models.TextField(verbose_name="Рецепт и описание")
     ingredients = models.ManyToManyField(Ingredient, through="Recipe", verbose_name="Ингредиенты")
     CATEGORY_CHOICES = (
@@ -83,7 +82,7 @@ class Dish(models.Model):
 class Recipe(models.Model):
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
     dish = models.ForeignKey(Dish, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(blank=True, null=True, verbose_name="Количество")
+    quantity = models.PositiveIntegerField(blank=True, null=True, verbose_name="Брутто")
 
 
 class TestIngredient(models.Model):

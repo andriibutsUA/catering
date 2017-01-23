@@ -59,7 +59,6 @@ class Dish(models.Model):
     gross = models.PositiveIntegerField(verbose_name="Брутто", default=50)
     description = models.TextField(verbose_name="Рецепт и описание")
     ingredients = models.ManyToManyField(Ingredient, through="Recipe", verbose_name="Ингредиенты")
-    privet = models.CharField(max_length=250, verbose_name="Приветики", default="Здоров пацаны")
     CATEGORY_CHOICES = (
         ('1', 'Холодные закуски'),
         ('2', 'Закуски'),

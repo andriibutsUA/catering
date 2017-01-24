@@ -58,6 +58,7 @@ class Dish(models.Model):
     title = models.CharField(max_length=250, verbose_name="Название")
     description = models.TextField(verbose_name="Рецепт и описание")
     ingredients = models.ManyToManyField(Ingredient, through="Recipe", verbose_name="Ингредиенты")
+    souce = models.ForeignKey('self', on_delete=models.CASCADE, verbose_name="Соус", blank=True, null=True)
     CATEGORY_CHOICES = (
         ('1', 'Холодные закуски'),
         ('2', 'Закуски'),

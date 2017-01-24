@@ -49,13 +49,6 @@ $(document).ready( function($) {
             }
           });
           var theEditLink = selectParent.find(".change-related").attr("href", theHref);
-          console.log(theEditLink)
-          console.log(theHref);
-          console.log("selectId:", selectId);
-          console.log("theSelect:", theSelect);
-          console.log("selectParent:", selectParent);
-          console.log("spanCustomCombobox:", spanCustomCombobox);
-          console.log(spanCustomComboboxInput);
         },
 
         autocompletechange: "_removeIfInvalid"
@@ -152,8 +145,25 @@ $(document).ready( function($) {
   $( ".related-widget-wrapper > select" ).combobox();
   $(".add-row > td > a").on("click", function() {
     $( ".related-widget-wrapper > select" ).combobox();
-  })
+    $(this).parent().parent().prev().prev().find("td.field-ingredient > div > span:nth-child(3)").remove();
+  });
+
   $( "#toggle").on("click", function() {
     $("#combobox").toggle();
+  })
+
+  $(".add-related").on("click", function() {
+    var target = $(this).parent().find("select")[0];
+    console.log(target);
+    var observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutation) {
+        if (mutation.type == "childList") {
+          var ingredientName = mutation.addedNodes[0].text;
+          $(target).next("span").find("input").val(ingredientName);
+        }
+      });
+    });
+    var config = { attributes: true, childList: true, characterData: true }
+    observer.observe(target, config)
   })
 } );

@@ -36,6 +36,26 @@ $(document).ready( function($) {
           this._trigger( "select", event, {
             item: ui.item.option
           });
+          var selectId = $(this.element[0]).attr("id");
+          var theSelect = $("#" + selectId);
+          var selectParent = $("body").find("#" + selectId).parent();
+          var spanCustomCombobox = $("#" + selectId).next("span");
+          var spanCustomComboboxInput = ui.item.label;
+          var theHref = "";
+          var theOptions = $("#" + selectId + " option");
+          theOptions.each(function() {
+            if (spanCustomComboboxInput == $(this).text()) {
+              theHref = "/admin/buyer/ingredient/" + $(this).val() + "/change/?_to_field=id&_popup=1";
+            }
+          });
+          var theEditLink = selectParent.find(".change-related").attr("href", theHref);
+          console.log(theEditLink)
+          console.log(theHref);
+          console.log("selectId:", selectId);
+          console.log("theSelect:", theSelect);
+          console.log("selectParent:", selectParent);
+          console.log("spanCustomCombobox:", spanCustomCombobox);
+          console.log(spanCustomComboboxInput);
         },
 
         autocompletechange: "_removeIfInvalid"
@@ -129,7 +149,10 @@ $(document).ready( function($) {
     }
   });
 
-  $( "#id_category" ).combobox();
+  $( ".related-widget-wrapper > select" ).combobox();
+  $(".add-row > td > a").on("click", function() {
+    $( ".related-widget-wrapper > select" ).combobox();
+  })
   $( "#toggle").on("click", function() {
     $("#combobox").toggle();
   })

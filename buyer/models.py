@@ -83,28 +83,3 @@ class Recipe(models.Model):
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
     dish = models.ForeignKey(Dish, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(blank=True, null=True, verbose_name="Брутто")
-
-
-class TestIngredient(models.Model):
-    title = models.CharField(max_length=200, verbose_name="Название")
-
-    def __str__(self):
-        return self.title
-
-class TestDish(models.Model):
-    title = models.CharField(max_length=200, verbose_name="Название")
-    ingredeints = models.ManyToManyField(TestIngredient, through='TestRecipe', verbose_name="Ингредиенты")
-
-    def __str__(self):
-        return self.title
-
-class TestRecipe(models.Model):
-    ingredient = models.ForeignKey(TestIngredient, on_delete=models.CASCADE)
-    dish = models.ForeignKey(TestDish, on_delete=models.CASCADE)
-    whatever = models.DateField()
-    invite_reason = models.CharField(max_length=64)
-    quantity = models.PositiveIntegerField(blank=True, null=True)
-
-
-    def __str__(self):
-        return "Ингредиент"

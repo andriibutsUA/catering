@@ -59,6 +59,7 @@ class Dish(models.Model):
     description = models.TextField(verbose_name="Рецепт и описание")
     ingredients = models.ManyToManyField(Ingredient, through="Recipe", verbose_name="Ингредиенты")
     souce = models.ForeignKey('self', on_delete=models.CASCADE, verbose_name="Соус", blank=True, null=True)
+    souce_q = models.DecimalField(max_digits=10, decimal_places=3, verbose_name="Количество соуса", default=Decimal('5.00'))
     CATEGORY_CHOICES = (
         ('1', 'Холодные закуски'),
         ('2', 'Закуски'),
@@ -83,4 +84,7 @@ class Dish(models.Model):
 class Recipe(models.Model):
     ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
     dish = models.ForeignKey(Dish, on_delete=models.CASCADE)
-    quantity = models.PositiveIntegerField(blank=True, null=True, verbose_name="Брутто")
+    quantity = models.PositiveIntegerField(default="10", verbose_name="Брутто")
+
+    def __str__(self):
+        return str(self.dish)

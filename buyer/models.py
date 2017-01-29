@@ -30,9 +30,9 @@ class Ingredient(models.Model):
         ('17', 'Напитки безалкогольные'),
         ('18', 'Соки и компоты'),
     )
-    first_supplier = models.CharField(max_length=200, verbose_name="Поставщик 1", default="Novus")
-    second_supplier = models.CharField(max_length=200, verbose_name="Поставщик 2", default="Novus")
-    third_supplier = models.CharField(max_length=200, verbose_name="Поставщик 3", default="Novus")
+    first_supplier = models.CharField(max_length=200, verbose_name="Производитель 1", default="Novus")
+    second_supplier = models.CharField(max_length=200, verbose_name="Производитель 2", default="Novus")
+    third_supplier = models.CharField(max_length=200, verbose_name="Производитель 3", default="Novus")
     unit = models.CharField(
         max_length=1,
         choices=UNIT_CHOICES,
@@ -45,10 +45,10 @@ class Ingredient(models.Model):
         default='1',
         verbose_name="Категория",
         )
-    proteins = models.DecimalField(max_digits=10, decimal_places=3, verbose_name="Белки", default=Decimal('5.00'))
-    fats = models.DecimalField(max_digits=10, decimal_places=3, verbose_name="Жиры", default=Decimal('5.00'))
-    carbs = models.DecimalField(max_digits=10, decimal_places=3, verbose_name="Углеводы", default=Decimal('5.00'))
-    calories = models.DecimalField(max_digits=10, decimal_places=3, verbose_name="Калории", default=Decimal('5.00'))
+    proteins = models.DecimalField(max_digits=10, decimal_places=3, verbose_name="Белки", default=Decimal('0.00'))
+    fats = models.DecimalField(max_digits=10, decimal_places=3, verbose_name="Жиры", default=Decimal('0.00'))
+    carbs = models.DecimalField(max_digits=10, decimal_places=3, verbose_name="Углеводы", default=Decimal('0.00'))
+    calories = models.DecimalField(max_digits=10, decimal_places=3, verbose_name="Калории", default=Decimal('0.00'))
 
     def __str__(self):
         return self.title
@@ -56,10 +56,10 @@ class Ingredient(models.Model):
 
 class Dish(models.Model):
     title = models.CharField(max_length=250, verbose_name="Название")
-    description = models.TextField(verbose_name="Рецепт и описание")
+    description = models.TextField(verbose_name="Рецепт и описание", blank=True, null=True)
     ingredients = models.ManyToManyField(Ingredient, through="Recipe", verbose_name="Ингредиенты")
     souce = models.ForeignKey('self', on_delete=models.CASCADE, verbose_name="Соус", blank=True, null=True)
-    souce_q = models.DecimalField(max_digits=10, decimal_places=3, verbose_name="Количество соуса", default=Decimal('5.00'))
+    souce_q = models.DecimalField(max_digits=10, decimal_places=3, verbose_name="Количество соуса", default=Decimal('0.00'))
     CATEGORY_CHOICES = (
         ('1', 'Холодные закуски'),
         ('2', 'Закуски'),
@@ -82,9 +82,9 @@ class Dish(models.Model):
 
 
 class Recipe(models.Model):
-    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE)
+    ingredient = models.ForeignKey(Ingredient, on_delete=models.CASCADE, verbose_name="Ингредиент")
     dish = models.ForeignKey(Dish, on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(default="10", verbose_name="Брутто")
 
     def __str__(self):
-        return str(self.dish)
+        return "Ингредиент для " + str(self.dish)

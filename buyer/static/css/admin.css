@@ -8,5 +8,17 @@
 .custom-combobox-input {
   margin: 0;
   padding: 5px 10px;
-  min-width: 350px;
+  min-width: 200px;
+}
+
+.field-ingredient {
+  width: 350px;
+}
+
+.field-quantity {
+  width: 150px;
+}
+
+.object-tools a.addlink {
+  background: green;
 }

@@ -1,11 +1,10 @@
 from django.contrib import admin
 from .models import Ingredient, Dish, Recipe
 
-admin.site.register(Ingredient)
 
 class DishInline(admin.TabularInline):
     model = Recipe
-    extra = 1
+    extra = 0
     verbose_name = "Ингредиент"
     verbose_name_plural = "Ингредиенты"
     class Media:
@@ -22,6 +21,22 @@ class DishInline(admin.TabularInline):
              )
 
 class DishAdmin(admin.ModelAdmin):
+    class Media:
+        css = {
+            "all": ("css/admin.css",)
+        }
     inlines = (DishInline,)
+    list_filter = ['category']
+    search_fields = ['title']
+
+class IngredientAdmin(admin.ModelAdmin):
+    class Media:
+        css = {
+            "all": ("css/admin.css",)
+        }
+
+    list_filter = ('category',)
+    search_fields = ['title']
 
 admin.site.register(Dish, DishAdmin)
+admin.site.register(Ingredient, IngredientAdmin)

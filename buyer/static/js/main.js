@@ -142,9 +142,9 @@ $(document).ready( function($) {
     }
   });
 
-  $( ".related-widget-wrapper > select" ).combobox();
+  $( "#recipe_set-group .related-widget-wrapper > select" ).combobox();
   $(".add-row > td > a").on("click", function() {
-    $( ".related-widget-wrapper > select" ).combobox();
+    $( "#recipe_set-group .related-widget-wrapper > select" ).combobox();
     $(this).parent().parent().prev().prev().find("td.field-ingredient > div > span:nth-child(3)").remove();
   });
 

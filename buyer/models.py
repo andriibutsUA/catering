@@ -49,7 +49,9 @@ class Ingredient(models.Model):
     fats = models.DecimalField(max_digits=10, decimal_places=3, verbose_name="Жиры", default=Decimal('0.00'))
     carbs = models.DecimalField(max_digits=10, decimal_places=3, verbose_name="Углеводы", default=Decimal('0.00'))
     calories = models.DecimalField(max_digits=10, decimal_places=3, verbose_name="Калории", default=Decimal('0.00'))
-
+    class Meta:
+        verbose_name = "Ингредиент"
+        verbose_name_plural = "Ингредиенты"
     def __str__(self):
         return self.title
 
@@ -58,8 +60,8 @@ class Dish(models.Model):
     title = models.CharField(max_length=250, verbose_name="Название")
     description = models.TextField(verbose_name="Рецепт и описание", blank=True, null=True)
     ingredients = models.ManyToManyField(Ingredient, through="Recipe", verbose_name="Ингредиенты")
-    souce = models.ForeignKey('self', on_delete=models.CASCADE, verbose_name="Соус", blank=True, null=True)
-    souce_q = models.DecimalField(max_digits=10, decimal_places=3, verbose_name="Количество соуса", default=Decimal('0.00'))
+    sauce = models.ForeignKey("self", verbose_name="Соус", limit_choices_to={'category': '9'}, blank=True, null=True)
+    sauce_q = models.PositiveIntegerField(default="0", verbose_name="Количество соуса")
     CATEGORY_CHOICES = (
         ('1', 'Холодные закуски'),
         ('2', 'Закуски'),
@@ -69,6 +71,7 @@ class Dish(models.Model):
         ('6', 'Десерты'),
         ('7', 'Барбекю'),
         ('8', 'Напитки'),
+        ('9', 'Соусы')
     )
     category = models.CharField(
         max_length=2,
@@ -76,7 +79,9 @@ class Dish(models.Model):
         default='2',
         verbose_name="Категория"
     )
-
+    class Meta:
+        verbose_name = "Блюдо"
+        verbose_name_plural = "Блюда"
     def __str__(self):
         return self.title
 

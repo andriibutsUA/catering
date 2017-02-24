@@ -7,6 +7,7 @@ class DishInline(admin.TabularInline):
     extra = 0
     verbose_name = "Ингредиент"
     verbose_name_plural = "Ингредиенты"
+
     class Media:
         css = {
             "all": (
@@ -20,14 +21,18 @@ class DishInline(admin.TabularInline):
                 "js/main.js",
              )
 
+
 class DishAdmin(admin.ModelAdmin):
+
     class Media:
         css = {
             "all": ("css/admin.css",)
         }
     inlines = (DishInline,)
     list_filter = ['category']
+    list_display = ('title', 'weight',)
     search_fields = ['title']
+
 
 class IngredientAdmin(admin.ModelAdmin):
     class Media:

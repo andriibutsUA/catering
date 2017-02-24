@@ -21,7 +21,7 @@ $(document).ready( function($) {
         .addClass( "custom-combobox-input ui-widget ui-widget-content ui-state-default ui-corner-left" )
         .autocomplete({
           delay: 0,
-          minLength: 0,
+          minLength: 3,
           source: $.proxy( this, "_source" )
         })
         .tooltip({

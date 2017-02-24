@@ -1,6 +1,5 @@
 from django.db import models
 from decimal import Decimal
-from django.contrib.postgres.fields import JSONField
 
 
 class Ingredient(models.Model):
@@ -29,6 +28,8 @@ class Ingredient(models.Model):
         ('16', 'Напитки алкогольные'),
         ('17', 'Напитки безалкогольные'),
         ('18', 'Соки и компоты'),
+        ('19', 'Приправы и специи'),
+        ('20', 'Разное'),
     )
     first_supplier = models.CharField(max_length=200, verbose_name="Производитель 1", default="Novus")
     second_supplier = models.CharField(max_length=200, verbose_name="Производитель 2", default="Novus")
@@ -49,9 +50,11 @@ class Ingredient(models.Model):
     fats = models.DecimalField(max_digits=10, decimal_places=3, verbose_name="Жиры", default=Decimal('0.00'))
     carbs = models.DecimalField(max_digits=10, decimal_places=3, verbose_name="Углеводы", default=Decimal('0.00'))
     calories = models.DecimalField(max_digits=10, decimal_places=3, verbose_name="Калории", default=Decimal('0.00'))
+
     class Meta:
         verbose_name = "Ингредиент"
         verbose_name_plural = "Ингредиенты"
+
     def __str__(self):
         return self.title
 
@@ -60,6 +63,7 @@ class Dish(models.Model):
     title = models.CharField(max_length=250, verbose_name="Название")
     description = models.TextField(verbose_name="Рецепт и описание", blank=True, null=True)
     ingredients = models.ManyToManyField(Ingredient, through="Recipe", verbose_name="Ингредиенты")
+    weight = models.PositiveIntegerField(verbose_name="Вес", default="1")
     sauce = models.ForeignKey("self", verbose_name="Соус", limit_choices_to={'category': '9'}, blank=True, null=True)
     sauce_q = models.PositiveIntegerField(default="0", verbose_name="Количество соуса")
     CATEGORY_CHOICES = (
@@ -71,7 +75,11 @@ class Dish(models.Model):
         ('6', 'Десерты'),
         ('7', 'Барбекю'),
         ('8', 'Напитки'),
-        ('9', 'Соусы')
+        ('9', 'Соусы'),
+        ('10', 'Спорт'),
+        ('11', 'Канапе'),
+        ('12', 'Салаты'),
+        ('13', 'Намазки'),
     )
     category = models.CharField(
         max_length=2,
@@ -79,9 +87,11 @@ class Dish(models.Model):
         default='2',
         verbose_name="Категория"
     )
+
     class Meta:
         verbose_name = "Блюдо"
         verbose_name_plural = "Блюда"
+
     def __str__(self):
         return self.title
 

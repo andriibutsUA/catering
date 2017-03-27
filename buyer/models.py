@@ -103,3 +103,13 @@ class Recipe(models.Model):
 
     def __str__(self):
         return "Ингредиент для " + str(self.dish)
+
+
+class BuyerListIntermediate(models.Model):
+    dish = models.ForeignKey(Dish, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default="1")
+
+
+class BuyerList(models.Model):
+    title = models.CharField(max_length=250, verbose_name="Название")
+    dishes = models.ManyToManyField(BuyerListIntermediate, verbose_name="Блюда")

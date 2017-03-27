@@ -25,7 +25,7 @@ SECRET_KEY = '9)5o9d^&#zpve@slu^lmar(^gugftx_mi#)=yz5x-!8=*q0jqp'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['46.101.132.211']
+ALLOWED_HOSTS = ['46.101.132.211', '127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -80,7 +80,7 @@ DATABASES = {
         'NAME': 'catering',
 	'USER': 'cateringadmin',
 	'PASSWORD': 'gmailgogo452',
-	'HOST': 'localhost',
+	'HOST': '46.101.132.211',
 	'PORT': '',
     }
 }

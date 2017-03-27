@@ -113,3 +113,10 @@ class BuyerListIntermediate(models.Model):
 class BuyerList(models.Model):
     title = models.CharField(max_length=250, verbose_name="Название")
     dishes = models.ManyToManyField(BuyerListIntermediate, verbose_name="Блюда")
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Список закупщика"
+        verbose_name_plural = "Ингредиенты"
